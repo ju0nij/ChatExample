@@ -253,6 +253,7 @@ namespace Server
             }
             catch(Exception ex)
             {
+                AppendText(log, "클라이언트 " + obj.WorkingSocket.RemoteEndPoint + " 에서 연결해제 되었습니다.");
                 return;
             }
 

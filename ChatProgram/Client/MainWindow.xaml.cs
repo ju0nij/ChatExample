@@ -223,11 +223,10 @@ namespace Client
                 txtPort.SelectAll();
                 return;
             }
-
-            try { mainSock.Connect(txtAddress.Text, port); }
+            try { mainSock.ConnectAsync(txtAddress.Text, port); }
             catch (Exception ex)
             {
-                MessageBox.Show("연결에 실패했습니다!\n오류 내용: {0}", ex.Message, MessageBoxButton.OK);
+                MessageBox.Show("연결에 실패했습니다!\n오류 내용: " +  ex.Message, "", MessageBoxButton.OK);
                 return;
             }
 
@@ -248,6 +247,8 @@ namespace Client
             catch (Exception ex)
             {
                 MessageBox.Show("서버와의 연결이 끊어졌습니다! 서버 상태를 확인해주세요.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                mainSock.Close();
+                mainSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
                 return;
             }
 
