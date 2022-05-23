@@ -1,4 +1,4 @@
-# ChatExample
+# ChatProgram
 
 DEVELOPERS Project
 
