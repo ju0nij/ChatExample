@@ -144,6 +144,7 @@ namespace Server
         String args = "";
         bool isAddNeeded = false;
         bool isServerStarted = false;
+        bool isEncryption = true;
         delegate void AppendTextDelegate(Control ctrl, string s);
         AppendTextDelegate _textAppender;
         Socket mainSock;
@@ -274,8 +275,13 @@ namespace Server
             string ip = tokens[0];
             string msg = tokens[1];
             msg = msg.Trim('\0');
-
-            AppendText(log, string.Format("[받음]{0}: {1}", ip, aes256.Decrypt(msg)));
+            string resulttxt;
+            if (isEncryption)
+            {
+                resulttxt = aes256.Decrypt(msg);
+            }
+            else resulttxt = msg;
+            AppendText(log, string.Format("[받음]{0}: {1}", ip, resulttxt));
 
             // for을 통해 "역순"으로 클라이언트에게 데이터를 보낸다.
             for (int i = connectedClients.Count - 1; i >= 0; i--)
@@ -306,14 +312,18 @@ namespace Server
             }
 
             string tts = txtTTS.Text.Trim();
-            string ttse = aes256.Encrypt(tts);
+            string ttse;
+            if (isEncryption)
+            {
+                ttse = aes256.Encrypt(tts);
+            }
+            else ttse = tts;
             if (string.IsNullOrEmpty(tts))
             {
                 MessageBox.Show("텍스트가 입력되지 않았습니다!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 txtTTS.Focus();
                 return;
             }
-
             byte[] bDts = Encoding.UTF8.GetBytes(thisAddress.ToString() + '\x01' + ttse);
 
             for (int i = connectedClients.Count - 1; i >= 0; i--)
@@ -346,6 +356,16 @@ namespace Server
                     txtTTS.Focus();
                 }
             }
+        }
+
+        private void isEncrypt_Checked(object sender, RoutedEventArgs e)
+        {
+            isEncryption = true;
+        }
+
+        private void isEncrypt_Unchecked(object sender, RoutedEventArgs e)
+        {
+            isEncryption = false;
         }
     }
 }
