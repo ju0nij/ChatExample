@@ -160,7 +160,6 @@ namespace Client
             IPHostEntry he = Dns.GetHostEntry(Dns.GetHostName());
             aes256 = new AES256("developers123456developers123456");
 
-            // 처음으로 발견되는 ipv4 주소를 사용한다.
             IPAddress defaultHostAddress = null;
             foreach (IPAddress addr in he.AddressList)
             {
