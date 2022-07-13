@@ -224,7 +224,7 @@ namespace Client
                 txtPort.SelectAll();
                 return;
             }
-            try { mainSock.Connect(new IPEndPoint(IPAddress.Parse(txtAddress.Text), 15000)); }
+            try { mainSock.Connect(new IPEndPoint(IPAddress.Parse(txtAddress.Text), port)); }
             catch (Exception ex)
             {
                 MessageBox.Show("연결에 실패했습니다!\n오류 내용: " +  ex.Message, "", MessageBoxButton.OK);
