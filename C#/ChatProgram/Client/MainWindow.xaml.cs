@@ -158,7 +158,7 @@ namespace Client
             mainSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
             _textAppender = new AppendTextDelegate(AppendText);
             IPHostEntry he = Dns.GetHostEntry(Dns.GetHostName());
-            aes256 = new AES256("developerswithaes256byjuyeongjin");
+            aes256 = new AES256("developers123456developers123456");
 
             // 처음으로 발견되는 ipv4 주소를 사용한다.
             IPAddress defaultHostAddress = null;
@@ -260,10 +260,6 @@ namespace Client
             }
 
             string text = Encoding.UTF8.GetString(obj.Buffer);
-
-            // 0x01 기준으로 짜른다.
-            // tokens[0] - 보낸 사람 IP
-            // tokens[1] - 보낸 메세지
             string[] tokens = text.Split('\x01');
             string ip = tokens[0];
             string msg = tokens[1];
@@ -303,7 +299,6 @@ namespace Client
                 return;
             }
 
-            // 서버 ip 주소와 메세지를 담도록 만든다.
             IPEndPoint ip = (IPEndPoint)mainSock.LocalEndPoint;
             string addr = ip.Address.ToString() + ":" + (ip.Port.ToString());
             byte[] bDts = Encoding.UTF8.GetBytes(addr + '\x01' + ttse);

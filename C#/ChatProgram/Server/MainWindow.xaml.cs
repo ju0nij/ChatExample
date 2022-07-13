@@ -161,7 +161,7 @@ namespace Server
             _textAppender = new AppendTextDelegate(AppendText);
 
             IPHostEntry he = Dns.GetHostEntry(Dns.GetHostName());
-            aes256 = new AES256("developerswithaes256byjuyeongjin");
+            aes256 = new AES256("developers123456developers123456");
 
             // 처음으로 발견되는 ipv4 주소를 사용한다.
             foreach (IPAddress addr in he.AddressList)
@@ -267,10 +267,6 @@ namespace Server
             }
 
             string text = Encoding.UTF8.GetString(obj.Buffer);
-
-            // 0x01 기준으로 짜른다.
-            // tokens[0] - 보낸 사람 IP
-            // tokens[1] - 보낸 메세지
             string[] tokens = text.Split('\x01');
             string ip = tokens[0];
             string msg = tokens[1];
@@ -283,7 +279,6 @@ namespace Server
             else resulttxt = msg;
             AppendText(log, string.Format("[받음]{0}: {1}", ip, resulttxt));
 
-            // for을 통해 "역순"으로 클라이언트에게 데이터를 보낸다.
             for (int i = connectedClients.Count - 1; i >= 0; i--)
             {
                 Socket socket = connectedClients[i];
