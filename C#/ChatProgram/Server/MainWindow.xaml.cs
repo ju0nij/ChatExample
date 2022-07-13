@@ -220,7 +220,7 @@ namespace Server
                 return;
             }
 
-            IPEndPoint serverEP = new IPEndPoint(thisAddress, port);
+            IPEndPoint serverEP = new IPEndPoint(IPAddress.Any, port);
             mainSock.Bind(serverEP);
             mainSock.Listen(10);
 
